@@ -7,6 +7,8 @@ from decouple import config
 from ktem.utils.lang import SUPPORTED_LANGUAGE_MAP
 from theflow.settings.default import *  # noqa
 
+KH_APP_NAME = "SME AI KMGPT"
+
 cur_frame = currentframe()
 if cur_frame is None:
     raise ValueError("Cannot get the current frame.")
@@ -306,7 +308,7 @@ SETTINGS_REASONING = {
     },
     "lang": {
         "name": "Language",
-        "value": "en",
+        "value": "zh",
         "choices": [(lang, code) for code, lang in SUPPORTED_LANGUAGE_MAP.items()],
         "component": "dropdown",
     },

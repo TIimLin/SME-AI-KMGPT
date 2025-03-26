@@ -32,10 +32,10 @@ class LoginPage(BasePage):
         self.on_building_ui()
 
     def on_building_ui(self):
-        gr.Markdown(f"# Welcome to {self._app.app_name}!")
-        self.usn = gr.Textbox(label="Username", visible=False)
-        self.pwd = gr.Textbox(label="Password", type="password", visible=False)
-        self.btn_login = gr.Button("Login", visible=False)
+        gr.Markdown("# Welcome to SME AI KMGPT")
+        self.usn = gr.Textbox(label="用戶名", visible=False)
+        self.pwd = gr.Textbox(label="密碼", type="password", visible=False)
+        self.btn_login = gr.Button("登錄", visible=False)
 
     def on_register_events(self):
         onSignIn = gr.on(

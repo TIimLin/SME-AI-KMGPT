@@ -48,12 +48,12 @@ class App(BaseApp):
                 from ktem.pages.login import LoginPage
 
                 with gr.Tab(
-                    "Welcome", elem_id="login-tab", id="login-tab"
+                    "SME AI KMGPT", elem_id="login-tab", id="login-tab"
                 ) as self._tabs["login-tab"]:
                     self.login_page = LoginPage(self)
 
             with gr.Tab(
-                "Chat",
+                "聊天",
                 elem_id="chat-tab",
                 id="chat-tab",
                 visible=not self.f_user_management,
@@ -77,7 +77,7 @@ class App(BaseApp):
                         setattr(self, f"_index_{index.id}", page)
             elif len(self.index_manager.indices) > 1:
                 with gr.Tab(
-                    "Files",
+                    "文件",
                     elem_id="indices-tab",
                     elem_classes=["fill-main-area-height", "scrollable", "indices-tab"],
                     id="indices-tab",
@@ -94,7 +94,7 @@ class App(BaseApp):
             if not KH_DEMO_MODE:
                 if not KH_SSO_ENABLED:
                     with gr.Tab(
-                        "Resources",
+                        "資源",
                         elem_id="resources-tab",
                         id="resources-tab",
                         visible=not self.f_user_management,
@@ -103,7 +103,7 @@ class App(BaseApp):
                         self.resources_page = ResourcesTab(self)
 
                 with gr.Tab(
-                    "Settings",
+                    "設置",
                     elem_id="settings-tab",
                     id="settings-tab",
                     visible=not self.f_user_management,
@@ -111,14 +111,15 @@ class App(BaseApp):
                 ) as self._tabs["settings-tab"]:
                     self.settings_page = SettingsPage(self)
 
-            with gr.Tab(
-                "Help",
-                elem_id="help-tab",
-                id="help-tab",
-                visible=not self.f_user_management,
-                elem_classes=["fill-main-area-height", "scrollable"],
-            ) as self._tabs["help-tab"]:
-                self.help_page = HelpPage(self)
+            # 註釋掉 Help 標籤，使其不顯示
+            # with gr.Tab(
+            #     "Help",
+            #     elem_id="help-tab",
+            #     id="help-tab",
+            #     visible=not self.f_user_management,
+            #     elem_classes=["fill-main-area-height", "scrollable"],
+            # ) as self._tabs["help-tab"]:
+            #     self.help_page = HelpPage(self)
 
         if KH_ENABLE_FIRST_SETUP:
             with gr.Column(visible=False) as self.setup_page_wrapper:

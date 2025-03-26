@@ -1,0 +1,55 @@
+FROM ghcr.io/cinnamon/kotaemon:main-full
+
+# 修改原始的 __init__.py 文件中的 "Information panel" 文本
+RUN sed -i 's/label="Information panel"/label="資訊面板"/g' /app/libs/ktem/ktem/pages/chat/__init__.py
+
+# 修改 "Chat settings" 文本
+RUN sed -i 's/label="Chat settings"/label="聊天設置"/g' /app/libs/ktem/ktem/pages/chat/__init__.py
+
+# 修改引用選項
+RUN sed -i 's/"citation: highlight"/"引用：高亮顯示"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true
+RUN sed -i 's/"citation: inline"/"引用：行內"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true
+RUN sed -i 's/"no citation"/"無引用"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true
+
+# 修改引用選項在 simple.py 中
+RUN sed -i 's/"citation: highlight"/"引用：高亮顯示"/g' /app/libs/ktem/ktem/reasoning/simple.py || true
+RUN sed -i 's/"citation: inline"/"引用：行內"/g' /app/libs/ktem/ktem/reasoning/simple.py || true
+RUN sed -i 's/"no citation"/"無引用"/g' /app/libs/ktem/ktem/reasoning/simple.py || true
+
+# 修改聊天設置選項標籤 - 更精確的匹配模式
+RUN sed -i 's/gr.HTML("Reasoning method")/gr.HTML("推理方法")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+RUN sed -i 's/gr.HTML("Model"[^)]*)/gr.HTML("模型")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+RUN sed -i 's/gr.HTML("Language")/gr.HTML("語言")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+
+# 處理 Model 標籤的更多可能位置
+RUN grep -l "Model" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/Model/模型/g' || true
+
+# 修改 ui.py 中的搜索按鈕文本（這是真正的定義位置）
+RUN sed -i 's/("Search All", "all")/("全部搜索", "all")/g' /app/libs/ktem/ktem/index/file/ui.py || true
+RUN sed -i 's/("Search In File(s)", "select")/("在文件中搜索", "select")/g' /app/libs/ktem/ktem/index/file/ui.py || true
+
+COPY libs/ktem/ktem/pages/login.py /app/libs/ktem/ktem/pages/login.py
+COPY libs/ktem/ktem/main.py /app/libs/ktem/ktem/main.py
+COPY flowsettings.py /app/flowsettings.py
+
+# 複製已修改的聊天界面文件
+COPY libs/ktem/ktem/pages/chat/control.py /app/libs/ktem/ktem/pages/chat/control.py
+COPY libs/ktem/ktem/pages/chat/chat_panel.py /app/libs/ktem/ktem/pages/chat/chat_panel.py
+COPY libs/ktem/ktem/pages/chat/chat_suggestion.py /app/libs/ktem/ktem/pages/chat/chat_suggestion.py
+COPY libs/ktem/ktem/pages/chat/demo_hint.py /app/libs/ktem/ktem/pages/chat/demo_hint.py
+
+# 處理 Mindmap 相關的標籤
+RUN sed -i 's/label="Mindmap (on)"/label="思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+RUN sed -i 's/label="Mindmap (off)"/label="思維導圖 (關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+RUN sed -i 's/"Mindmap (on)"/"思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+RUN sed -i 's/"Mindmap (off)"/"思維導圖 (關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+
+# 處理可能在 JavaScript 中的切換邏輯
+RUN grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"Mindmap ("/"思維導圖 ("/g' || true
+RUN grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"on)"/"開啟)"/g' || true
+RUN grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"off)"/"關閉)"/g' || true
+
+# 翻譯 Quick Upload 和 Feedback 文本
+RUN sed -i 's/"Quick Upload"/"快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+RUN sed -i 's/label="Quick Upload"/label="快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
+RUN sed -i 's/with gr.Accordion(label="Feedback"/with gr.Accordion(label="反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true 

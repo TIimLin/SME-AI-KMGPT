@@ -51,7 +51,7 @@ class ConversationControl(BasePage):
 
     def on_building_ui(self):
         with gr.Row():
-            title_text = "Conversations" if not KH_DEMO_MODE else "Kotaemon Papers"
+            title_text = "對話列表" if not KH_DEMO_MODE else "Kotaemon Papers"
             gr.Markdown("## {}".format(title_text))
             self.btn_toggle_dark_mode = gr.Button(
                 value="",
@@ -90,7 +90,7 @@ class ConversationControl(BasePage):
 
         self.conversation_id = gr.State(value="")
         self.conversation = gr.Dropdown(
-            label="Chat sessions",
+            label="聊天會話",
             choices=[],
             container=False,
             filterable=True,
@@ -102,7 +102,7 @@ class ConversationControl(BasePage):
         with gr.Row() as self._new_delete:
             self.cb_suggest_chat = gr.Checkbox(
                 value=False,
-                label="Suggest chat",
+                label="建議對話",
                 min_width=10,
                 scale=6,
                 elem_id="suggest-chat-checkbox",
@@ -111,7 +111,7 @@ class ConversationControl(BasePage):
             )
             self.cb_is_public = gr.Checkbox(
                 value=False,
-                label="Share this conversation",
+                label="分享此對話",
                 elem_id="is-public-checkbox",
                 container=False,
                 visible=not KH_DEMO_MODE and not KH_SSO_ENABLED,
@@ -145,7 +145,7 @@ class ConversationControl(BasePage):
                 )
             else:
                 self.btn_new = gr.Button(
-                    value="New chat",
+                    value="新對話",
                     min_width=120,
                     size="sm",
                     scale=1,
@@ -157,7 +157,7 @@ class ConversationControl(BasePage):
         if KH_DEMO_MODE:
             with gr.Row():
                 self.btn_demo_login = gr.Button(
-                    "Sign-in to create new chat",
+                    "登錄以創建新對話",
                     min_width=120,
                     size="sm",
                     scale=1,
@@ -172,7 +172,7 @@ class ConversationControl(BasePage):
                 self.btn_demo_login.click(None, js=_js_redirect)
 
                 self.btn_demo_logout = gr.Button(
-                    "Sign-out",
+                    "登出",
                     min_width=120,
                     size="sm",
                     scale=1,
@@ -181,16 +181,16 @@ class ConversationControl(BasePage):
 
         with gr.Row(visible=False) as self._delete_confirm:
             self.btn_del_conf = gr.Button(
-                value="Delete",
+                value="刪除",
                 variant="stop",
                 min_width=10,
             )
-            self.btn_del_cnl = gr.Button(value="Cancel", min_width=10)
+            self.btn_del_cnl = gr.Button(value="取消", min_width=10)
 
         with gr.Row():
             self.conversation_rn = gr.Text(
-                label="(Enter) to save",
-                placeholder="Conversation name",
+                label="按 Enter 保存",
+                placeholder="對話名稱",
                 container=True,
                 scale=5,
                 min_width=10,
