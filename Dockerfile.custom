@@ -52,4 +52,14 @@ RUN grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"
 # 翻譯 Quick Upload 和 Feedback 文本
 RUN sed -i 's/"Quick Upload"/"快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
 RUN sed -i 's/label="Quick Upload"/label="快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-RUN sed -i 's/with gr.Accordion(label="Feedback"/with gr.Accordion(label="反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true 
+RUN sed -i 's/with gr.Accordion(label="Feedback"/with gr.Accordion(label="反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
+
+# 翻譯反饋面板中的所有文本
+RUN sed -i 's/label="Correctness:"/label="準確性:"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
+RUN sed -i 's/"The answer is correct"/"回答是正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
+RUN sed -i 's/"The answer is incorrect"/"回答是不正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
+RUN sed -i 's/label="Other issue:"/label="其他問題:"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
+RUN sed -i 's/"The answer is offensive"/"回答是冒犯性的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
+RUN sed -i 's/"The evidence is incorrect"/"證據是不正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
+RUN sed -i 's/"Report"/"提交反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
+RUN sed -i 's/"Or paste URLs"/"或粘貼網址"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
