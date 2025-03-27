@@ -1,0 +1,16 @@
+version: '3'
+services:
+  kmgpt:
+    build:
+      context: .
+      dockerfile: Dockerfile.custom
+    image: kotaemon-custom
+    container_name: kmgpt
+    environment:
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - GRADIO_SERVER_PORT=7860
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./ktem_app_data:/app/ktem_app_data
+    restart: unless-stopped 

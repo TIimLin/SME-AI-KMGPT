@@ -14,16 +14,30 @@ SME AI KMGPT 是一個基於 RAG (Retrieval-Augmented Generation) 技術的智�
 
 ## 啟動方式
 
-您可以使用 Docker 快速部署本系統：
+您可以使用以下方式來啟動系統：
 
-### 1. 建立自定義 Docker 映像檔
+### 方式一：使用 Docker Compose（推薦）
 
+只需要執行一個指令：
+```bash
+docker-compose up -d
+```
+
+要停止服務：
+```bash
+docker-compose down
+```
+
+### 方式二：手動執行 Docker 指令
+
+如果您需要更細緻的控制，可以手動執行以下指令：
+
+1. 建立自定義 Docker 映像檔：
 ```bash
 docker build -t kotaemon-custom -f Dockerfile.custom .
 ```
 
-### 2. 運行 Docker 容器
-
+2. 運行 Docker 容器：
 ```bash
 docker run -e GRADIO_SERVER_NAME=0.0.0.0 -e GRADIO_SERVER_PORT=7860 -v ./ktem_app_data:/app/ktem_app_data -p 7860:7860 -it --rm kotaemon-custom
 ```
