@@ -335,13 +335,12 @@ if USE_LIGHTRAG:
 
 KH_INDEX_TYPES = [
     "ktem.index.file.FileIndex",
-    *GRAPHRAG_INDEX_TYPES,
+    "ktem.index.file.graph.LightRAGIndex"
 ]
 
 GRAPHRAG_INDICES = [
     {
-        "name": graph_type.split(".")[-1].replace("Index", "")
-        + " Collection",  # get last name
+        "name": "LightRAG Collection",
         "config": {
             "supported_file_types": (
                 ".png, .jpeg, .jpg, .tiff, .tif, .pdf, .xls, .xlsx, .doc, .docx, "
@@ -349,9 +348,8 @@ GRAPHRAG_INDICES = [
             ),
             "private": True,
         },
-        "index_type": graph_type,
+        "index_type": "ktem.index.file.graph.LightRAGIndex",
     }
-    for graph_type in GRAPHRAG_INDEX_TYPES
 ]
 
 KH_INDICES = [
