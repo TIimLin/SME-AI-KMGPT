@@ -1,65 +1,205 @@
 FROM ghcr.io/cinnamon/kotaemon:main-full
 
-# 修改原始的 __init__.py 文件中的 "Information panel" 文本
-RUN sed -i 's/label="Information panel"/label="資訊面板"/g' /app/libs/ktem/ktem/pages/chat/__init__.py
-
-# 修改 "Chat settings" 文本
-RUN sed -i 's/label="Chat settings"/label="聊天設置"/g' /app/libs/ktem/ktem/pages/chat/__init__.py
-
-# 修改引用選項
-RUN sed -i 's/"citation: highlight"/"引用：高亮顯示"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true
-RUN sed -i 's/"citation: inline"/"引用：行內"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true
-RUN sed -i 's/"no citation"/"無引用"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true
-
-# 修改引用選項在 simple.py 中
-RUN sed -i 's/"citation: highlight"/"引用：高亮顯示"/g' /app/libs/ktem/ktem/reasoning/simple.py || true
-RUN sed -i 's/"citation: inline"/"引用：行內"/g' /app/libs/ktem/ktem/reasoning/simple.py || true
-RUN sed -i 's/"no citation"/"無引用"/g' /app/libs/ktem/ktem/reasoning/simple.py || true
-
-# 修改聊天設置選項標籤 - 更精確的匹配模式
-RUN sed -i 's/gr.HTML("Reasoning method")/gr.HTML("推理方法")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-RUN sed -i 's/gr.HTML("Model"[^)]*)/gr.HTML("模型")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-RUN sed -i 's/gr.HTML("Language")/gr.HTML("語言")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-
-# 處理 Model 標籤的更多可能位置
-RUN grep -l "Model" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/Model/模型/g' || true
-
-# 修改 ui.py 中的搜索按鈕文本（這是真正的定義位置）
-RUN sed -i 's/("Search All", "all")/("全部搜索", "all")/g' /app/libs/ktem/ktem/index/file/ui.py || true
-RUN sed -i 's/("Search In File(s)", "select")/("在文件中搜索", "select")/g' /app/libs/ktem/ktem/index/file/ui.py || true
+RUN sed -i 's/label="Information panel"/label="資訊面板"/g' /app/libs/ktem/ktem/pages/chat/__init__.py && \
+    sed -i 's/label="Chat settings"/label="聊天設置"/g' /app/libs/ktem/ktem/pages/chat/__init__.py && \
+    sed -i 's/"citation: highlight"/"引用：高亮顯示"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true && \
+    sed -i 's/"citation: inline"/"引用：行內"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true && \
+    sed -i 's/"no citation"/"無引用"/g' /app/libs/kotaemon/kotaemon/indices/qa/utils.py || true && \
+    sed -i 's/"citation: highlight"/"引用：高亮顯示"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"citation: inline"/"引用：行內"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"no citation"/"無引用"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/gr.HTML("Reasoning method")/gr.HTML("推理方法")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/gr.HTML("Model"[^)]*)/gr.HTML("模型")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/gr.HTML("Language")/gr.HTML("語言")/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    grep -l "Model" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/Model/模型/g' || true && \
+    sed -i 's/("Search All", "all")/("全部搜索", "all")/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/("Search In File(s)", "select")/("在文件中搜索", "select")/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/label="Mindmap (on)"/label="思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/label="Mindmap (off)"/label="思維導圖 (關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/"Mindmap (on)"/"思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/"Mindmap (off)"/"思維導圖 (關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"Mindmap ("/"思維導圖 ("/g' || true && \
+    grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"on)"/"開啟)"/g' || true && \
+    grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"off)"/"關閉)"/g' || true && \
+    sed -i 's/"Quick Upload"/"快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/label="Quick Upload"/label="快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/with gr.Accordion(label="Feedback"/with gr.Accordion(label="反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"Or paste URLs"/"或粘貼網址"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/label="Correctness:"/label="準確性:"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"The answer is correct"/"回答是正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"The answer is incorrect"/"回答是不正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/label="Other issue:"/label="其他問題:"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"The answer is offensive"/"回答是冒犯性的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"The evidence is incorrect"/"證據是不正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"Report"/"提交反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"More detail (e.g. how wrong is it, what is the "/"更多詳細資訊（例如：錯誤程度、"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"correct answer, etc...)"/"正確答案等）"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"This will send the current chat and the user settings to "/"這將發送目前對話和使用者設定以"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"help with investigation"/"協助調查"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
+    sed -i 's/"Upload Files"/"上傳檔案"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Use Web Links"/"使用網址連結"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/Supported file types:/支援的檔案類型：/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/Maximum file size:/檔案大小上限：/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Advanced indexing options"/"進階索引選項"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Force reindex file"/"強制重新索引檔案"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Upload and Index"/"上傳並索引"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Selected file: (please select above)"/"已選擇檔案：（請在上方選擇）"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Advance options"/"進階選項"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Download all files"/"下載所有檔案"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Delete all files"/"刪除所有檔案"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Filter by name:"/"依名稱過濾："/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Add"/"新增"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Files"/"檔案"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Groups"/"群組"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"(separated by new line)"/"（以換行分隔）"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Input web URLs"/"輸入網址"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"(1) Case-insensitive. "/"(1) 不區分大小寫。 "/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"(2) Search with empty string to show all files."/"(2) 搜尋空字串以顯示所有檔案。"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/gr.Tab(label="View")/gr.Tab(label="檢視")/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/gr.Tab(label="Add")/gr.Tab(label="新增")/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/gr.Tab(label="View")/gr.Tab(label="檢視")/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/gr.Tab(label="Add")/gr.Tab(label="新增")/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/gr.Tab(label="View")/gr.Tab(label="檢視")/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/gr.Tab(label="Add")/gr.Tab(label="新增")/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/gr.Tab(label="View")/gr.Tab(label="檢視")/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/gr.Tab(label="Add")/gr.Tab(label="新增")/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/gr.Tab(label="User list")/gr.Tab(label="使用者列表")/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/gr.Tab(label="Create user")/gr.Tab(label="建立使用者")/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Create user"/"建立使用者"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/label="Index name"/label="索引名稱"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/label="Index config"/label="索引設定"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"Admin configuration of the Index in YAML format"/"以 YAML 格式設定索引的管理員配置"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"IMPORTANT: Changing or deleting the index will require "/"重要提示：變更或刪除索引將需要"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"restarting the system. Some config settings will require "/"重新啟動系統。某些設定變更將需要"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"rebuilding the index for the index to work properly."/"重建索引才能正常運作。"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"Save"/"儲存"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"Delete"/"刪除"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"Close"/"關閉"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"Must be unique and non-empty."/"必須是唯一且非空的。"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/label="Index type"/label="索引類型"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/label="Specification"/label="規格"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"Specification of the index in YAML format."/"以 YAML 格式設定索引的規格。"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"# Spec description"/"# 規格說明"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/self.spec_desc_default = (/self.spec_desc_default = (/g; s/"# Spec description\\n\\nSelect an index to view the spec description."/"# 規格說明\\n\\n選擇一個索引以查看其規格說明。"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/gr.Markdown(/gr.Markdown(/g; s/"<mark>Note<\/mark>: "/"<mark>注意<\/mark>： "/g; s/"After creating index, please restart the app"/"建立索引後，請重新啟動應用程式"/g' /app/libs/ktem/ktem/index/ui.py || true && \
+    sed -i 's/"Set this LLM as default. If no default is set, a "/"將此 LLM 設為預設。若未設定預設，將使用"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"random LLM will be used."/"隨機 LLM。"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/label="Set default"/label="設為預設"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/label="Specification"/label="規格"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Specification of the LLM in YAML format"/"以 YAML 格式設定 LLM 的規格"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/label="Test connection"/label="測試連線"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Test"/"測試"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Save"/"儲存"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Delete"/"刪除"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Close"/"關閉"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/self.spec_desc_default = (/self.spec_desc_default = (/g; s/"# Spec description\\n\\nSelect an LLM to view the spec description."/"# 規格說明\\n\\n選擇一個 LLM 以查看其規格說明。"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/conv_dropdown.placeholder = "Browse conversation";/conv_dropdown.placeholder = "瀏覽對話";/g' /app/libs/ktem/ktem/assets/js/main.js || true && \
+    sed -i 's/label="LLM name"/label="LLM 名稱"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Must be unique. The name will be used to identify the LLM."/"必須是唯一的。名稱將用於識別 LLM。"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/label="LLM vendors"/label="LLM 供應商"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Add LLM"/"新增 LLM"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Choose the vendor for the LLM. Each vendor has different "/"選擇 LLM 的供應商。每個供應商有不同的"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"specification."/"規格。"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Set this LLM as default. This default LLM will be used "/"將此 LLM 設為預設。此預設 LLM 將"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"by default across the application."/"在整個應用程式中預設使用。"/g' /app/libs/ktem/ktem/llms/ui.py || true && \
+    sed -i 's/"Set default"/"設為預設"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/label="Specification"/label="規格"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Specification of the Embedding model in YAML format"/"以 YAML 格式設定嵌入模型的規格"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Set this Embedding model as default. This default "/"將此嵌入模型設為預設。此預設"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Embedding will be used by other components by default "/"嵌入模型將被其他元件預設使用"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"if no Embedding is specified for such components."/"如果這些元件未指定嵌入模型。"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/label="Test connection"/label="測試連線"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Test"/"測試"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Save"/"儲存"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Delete"/"刪除"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Close"/"關閉"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/label="Name"/label="名稱"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/label="Vendors"/label="供應商"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Add"/"新增"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Must be unique and non-empty. "/"必須是唯一且非空的。"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"The name will be used to identify the embedding model."/"名稱將用於識別嵌入模型。"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Choose the vendor of the Embedding model. Each vendor "/"選擇嵌入模型的供應商。每個供應商"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"has different specification."/"有不同的規格。"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/info="Specification of the Embedding model in YAML format."/info="以 YAML 格式設定嵌入模型的規格。"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/self.spec_desc_default = (/self.spec_desc_default = (/g; s/"# Spec description\\n\\nSelect a model to view the spec description."/"# 規格說明\\n\\n選擇一個模型以查看其規格說明。"/g' /app/libs/ktem/ktem/embeddings/ui.py || true && \
+    sed -i 's/"Set default"/"設為預設"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/label="Specification"/label="規格"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/label="Test connection"/label="測試連線"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Test"/"測試"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Save"/"儲存"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Delete"/"刪除"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Close"/"關閉"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Set this Reranking model as default. This default "/"將此重排序模型設為預設。此預設"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Reranking will be used by other components by default "/"重排序模型將被其他元件預設使用"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"if no Reranking is specified for such components."/"如果這些元件未指定重排序模型。"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Specification of the Embedding model in YAML format"/"以 YAML 格式設定重排序模型的規格"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/label="Name"/label="名稱"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/label="Vendors"/label="供應商"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Specification of the Embedding model in YAML format."/"以 YAML 格式設定重排序模型的規格。"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Add"/"新增"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Must be unique and non-empty. "/"必須是唯一且非空的。"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"The name will be used to identify the reranking model."/"名稱將用於識別重排序模型。"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Choose the vendor of the Reranking model. Each vendor "/"選擇重排序模型的供應商。每個供應商"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"has different specification."/"有不同的規格。"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/self.spec_desc_default = (/self.spec_desc_default = (/g; s/"# Spec description\\n\\nSelect a model to view the spec description."/"# 規格說明\\n\\n選擇一個模型以查看其規格說明。"/g' /app/libs/ktem/ktem/rerankings/ui.py || true && \
+    sed -i 's/"Username"/"使用者名稱"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Change password"/"變更密碼"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Confirm change password"/"確認變更密碼"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Admin"/"管理員"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Save"/"儲存"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Delete"/"刪除"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Close"/"關閉"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Password"/"密碼"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Confirm password"/"確認密碼"/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Username is case-insensitive/- 使用者名稱不區分大小寫/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Username must be at least 3 characters long/- 使用者名稱必須至少有 3 個字元/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Username must be at most 32 characters long/- 使用者名稱最多只能有 32 個字元/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Username must contain only alphanumeric characters and underscores/- 使用者名稱只能包含字母、數字和底線/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Password must be at least 8 characters long/- 密碼必須至少有 8 個字元/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Password must contain at least one uppercase letter/- 密碼必須包含至少一個大寫字母/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Password must contain at least one lowercase letter/- 密碼必須包含至少一個小寫字母/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Password must contain at least one digit/- 密碼必須包含至少一個數字/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/- Password must contain at least one special character from the following:/- 密碼必須包含以下特殊字元中的至少一個：/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Username rule:"/"使用者名稱規則："/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"Password rule:"/"密碼規則："/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/USERNAME_RULE = """\*\*Username rule:\*\*/USERNAME_RULE = """\*\*使用者名稱規則：\*\*/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/PASSWORD_RULE = """\*\*Password rule:\*\*/PASSWORD_RULE = """\*\*密碼規則：\*\*/g' /app/libs/ktem/ktem/pages/resources/user.py || true && \
+    sed -i 's/"User settings"/"使用者設定"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"Retrieval settings"/"檢索設定"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"Reasoning settings"/"推理設定"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"Save & Close"/"儲存並關閉"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"Current user: "/"目前使用者："/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"Logout"/"登出"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"New password"/"新密碼"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"Confirm password"/"確認密碼"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"Change password"/"變更密碼"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    # 在所有可能的相關文件中進行檢索設定的翻譯
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"File loader"/"檔案載入器"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"LLM for relevant scoring"/"相關性評分 LLM"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Number of document chunks to retrieve"/"要檢索的文件區塊數量"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Retrieval mode"/"檢索模式"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Prioritize table"/"優先處理表格"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Use MMR"/"使用 MMR"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Use reranking"/"使用重排序"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Use LLM relevant scoring"/"使用 LLM 相關性評分"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Language model"/"語言模型"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Citation style"/"引用樣式"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Create Mindmap"/"建立思維導圖"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Create Embeddings Visualization"/"建立嵌入視覺化"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Use Multimodal Input"/"使用多模態輸入"/g' {} \; || true && \
+    sed -i 's/gr.Markdown("### Reasoning-specific settings")/gr.Markdown("### 推理特定設定")/g' /app/libs/ktem/ktem/pages/settings.py || true && \
+    sed -i 's/"Simple RAG-based question answering pipeline. This pipeline can "/"簡易基於 RAG 的問答管道。此管道可以 "/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"perform both keyword search and similarity search to retrieve the "/"執行關鍵字搜尋和相似度搜尋來檢索 "/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"context. After that it includes that context to generate the answer."/"上下文。之後它會包含該上下文來生成答案。"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"System Prompt"/"系統提示"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"QA Prompt (contains {context}, {question}, {lang})"/"問答提示 (包含 {context}, {question}, {lang})"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"Number of interactions to include"/"要包含的互動次數"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"Maximum message length for context rewriting"/"上下文重寫的最大訊息長度"/g' /app/libs/ktem/ktem/reasoning/simple.py || true
 
 COPY libs/ktem/ktem/pages/login.py /app/libs/ktem/ktem/pages/login.py
 COPY libs/ktem/ktem/main.py /app/libs/ktem/ktem/main.py
 COPY flowsettings.py /app/flowsettings.py
-
-# 複製已修改的聊天界面文件
 COPY libs/ktem/ktem/pages/chat/control.py /app/libs/ktem/ktem/pages/chat/control.py
 COPY libs/ktem/ktem/pages/chat/chat_panel.py /app/libs/ktem/ktem/pages/chat/chat_panel.py
 COPY libs/ktem/ktem/pages/chat/chat_suggestion.py /app/libs/ktem/ktem/pages/chat/chat_suggestion.py
 COPY libs/ktem/ktem/pages/chat/demo_hint.py /app/libs/ktem/ktem/pages/chat/demo_hint.py
-
-# 處理 Mindmap 相關的標籤
-RUN sed -i 's/label="Mindmap (on)"/label="思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-RUN sed -i 's/label="Mindmap (off)"/label="思維導圖 (關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-RUN sed -i 's/"Mindmap (on)"/"思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-RUN sed -i 's/"Mindmap (off)"/"思維導圖 (關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-
-# 處理可能在 JavaScript 中的切換邏輯
-RUN grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"Mindmap ("/"思維導圖 ("/g' || true
-RUN grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"on)"/"開啟)"/g' || true
-RUN grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"off)"/"關閉)"/g' || true
-
-# 翻譯 Quick Upload 和 Feedback 文本
-RUN sed -i 's/"Quick Upload"/"快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-RUN sed -i 's/label="Quick Upload"/label="快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
-RUN sed -i 's/with gr.Accordion(label="Feedback"/with gr.Accordion(label="反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
-
-# 翻譯反饋面板中的所有文本
-RUN sed -i 's/label="Correctness:"/label="準確性:"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
-RUN sed -i 's/"The answer is correct"/"回答是正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
-RUN sed -i 's/"The answer is incorrect"/"回答是不正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
-RUN sed -i 's/label="Other issue:"/label="其他問題:"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
-RUN sed -i 's/"The answer is offensive"/"回答是冒犯性的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
-RUN sed -i 's/"The evidence is incorrect"/"證據是不正確的"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
-RUN sed -i 's/"Report"/"提交反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true
-RUN sed -i 's/"Or paste URLs"/"或粘貼網址"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true

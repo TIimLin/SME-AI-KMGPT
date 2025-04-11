@@ -301,19 +301,19 @@ SETTINGS_APP: dict[str, dict] = {}
 
 SETTINGS_REASONING = {
     "use": {
-        "name": "Reasoning options",
+        "name": "推理選項",
         "value": None,
         "choices": [],
         "component": "radio",
     },
     "lang": {
-        "name": "Language",
+        "name": "語言",
         "value": "zh",
         "choices": [(lang, code) for code, lang in SUPPORTED_LANGUAGE_MAP.items()],
         "component": "dropdown",
     },
     "max_context_length": {
-        "name": "Max context length (LLM)",
+        "name": "最大上下文長度 (LLM)",
         "value": 32000,
         "component": "number",
     },

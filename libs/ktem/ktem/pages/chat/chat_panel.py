@@ -8,7 +8,7 @@ if not KH_DEMO_MODE:
     PLACEHOLDER_TEXT = (
         "這是一個新的對話開始。\n"
         "您可以上傳文件或輸入網址開始。"
-        "訪問文件標籤以獲取更多選項（例如：GraphRAG）。"
+        "訪問文件標籤以獲取更多選項（例如：LightRAG）。"
     )
 else:
     PLACEHOLDER_TEXT = (
