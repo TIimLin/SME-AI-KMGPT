@@ -194,7 +194,23 @@ RUN sed -i 's/label="Information panel"/label="資訊面板"/g' /app/libs/ktem/k
     sed -i 's/"System Prompt"/"系統提示"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
     sed -i 's/"QA Prompt (contains {context}, {question}, {lang})"/"問答提示 (包含 {context}, {question}, {lang})"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
     sed -i 's/"Number of interactions to include"/"要包含的互動次數"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
-    sed -i 's/"Maximum message length for context rewriting"/"上下文重寫的最大訊息長度"/g' /app/libs/ktem/ktem/reasoning/simple.py || true
+    sed -i 's/"Maximum message length for context rewriting"/"上下文重寫的最大訊息長度"/g' /app/libs/ktem/ktem/reasoning/simple.py || true && \
+    sed -i 's/"Go to Chat"/"前往聊天"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Download"/"下載"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Start download"/"開始下載"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Delete"/"刪除"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Close"/"關閉"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Save"/"儲存"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Group name"/"群組名稱"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Attached files"/"附加檔案"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"### Group Information"/"### 群組資訊"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"### Add new group"/"### 新增群組"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"## Upload Progress"/"## 上傳進度"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Upload result"/"上傳結果"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Upload info"/"上傳資訊"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    sed -i 's/"Clear Upload Info and Close"/"清除上傳資訊並關閉"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Search type"/"搜尋類型"/g' {} \; || true && \
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/Prompt for/提示/g' {} \; || true
 
 COPY libs/ktem/ktem/pages/login.py /app/libs/ktem/ktem/pages/login.py
 COPY libs/ktem/ktem/main.py /app/libs/ktem/ktem/main.py
