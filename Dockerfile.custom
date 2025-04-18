@@ -14,13 +14,6 @@ RUN sed -i 's/label="Information panel"/label="資訊面板"/g' /app/libs/ktem/k
     grep -l "Model" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/Model/模型/g' || true && \
     sed -i 's/("Search All", "all")/("全部搜索", "all")/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
     sed -i 's/("Search In File(s)", "select")/("在文件中搜索", "select")/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
-    sed -i 's/label="Mindmap (on)"/label="思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
-    sed -i 's/label="Mindmap (off)"/label="思維導圖 (關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
-    sed -i 's/"Mindmap (on)"/"思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
-    sed -i 's/"Mindmap (off)"/"思維導圖 (關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
-    grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"Mindmap ("/"思維導圖 ("/g' || true && \
-    grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"on)"/"開啟)"/g' || true && \
-    grep -l "Mindmap" /app/libs/ktem/ktem/pages/chat/*.py | xargs -r sed -i 's/"off)"/"關閉)"/g' || true && \
     sed -i 's/"Quick Upload"/"快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
     sed -i 's/label="Quick Upload"/label="快速上傳"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
     sed -i 's/with gr.Accordion(label="Feedback"/with gr.Accordion(label="反饋"/g' /app/libs/ktem/ktem/pages/chat/report.py || true && \
@@ -173,7 +166,6 @@ RUN sed -i 's/label="Information panel"/label="資訊面板"/g' /app/libs/ktem/k
     sed -i 's/"New password"/"新密碼"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
     sed -i 's/"Confirm password"/"確認密碼"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
     sed -i 's/"Change password"/"變更密碼"/g' /app/libs/ktem/ktem/pages/settings.py || true && \
-    # 在所有可能的相關文件中進行檢索設定的翻譯
     find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"File loader"/"檔案載入器"/g' {} \; || true && \
     find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"LLM for relevant scoring"/"相關性評分 LLM"/g' {} \; || true && \
     find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Number of document chunks to retrieve"/"要檢索的文件區塊數量"/g' {} \; || true && \
@@ -210,7 +202,11 @@ RUN sed -i 's/label="Information panel"/label="資訊面板"/g' /app/libs/ktem/k
     sed -i 's/"Upload info"/"上傳資訊"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
     sed -i 's/"Clear Upload Info and Close"/"清除上傳資訊並關閉"/g' /app/libs/ktem/ktem/index/file/ui.py || true && \
     find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/"Search type"/"搜尋類型"/g' {} \; || true && \
-    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/Prompt for/提示/g' {} \; || true
+    find /app/libs/ktem -type f -name "*.py" -exec sed -i 's/Prompt for/提示/g' {} \; || true && \
+    sed -i 's/label="Mindmap (on)"/label="思維導圖 (開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/"(on)"/"(開啟)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/"(off)"/"(關閉)"/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true && \
+    sed -i 's/label="Mindmap "/label="思維導圖 "/g' /app/libs/ktem/ktem/pages/chat/__init__.py || true
 
 COPY libs/ktem/ktem/pages/login.py /app/libs/ktem/ktem/pages/login.py
 COPY libs/ktem/ktem/main.py /app/libs/ktem/ktem/main.py
